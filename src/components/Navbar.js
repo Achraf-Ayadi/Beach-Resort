@@ -9,7 +9,7 @@ function Navbar() {
   const toggleNavbar = () => {
     setIsOpen(!isOpen)
   }
-  console.log(isOpen)
+ 
 
   return (
     <nav className='navbar'>

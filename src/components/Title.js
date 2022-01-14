@@ -1,12 +1,12 @@
-import React from 'react'
+import React from "react";
 
-function Title({ title }) {
+const Title = ({ title }) => {
   return (
-    <section className='title'>
+    <div className="section-title">
       <h4>{title}</h4>
-      <div></div>
-    </section>
-  )
-}
+      <div />
+    </div>
+  );
+};
 
-export default Title
+export default Title;

@@ -19,7 +19,7 @@ function App() {
         <Route exact path='/rooms'>
           <Rooms />
         </Route>
-        <Route exact path='/singlerooms/:slug'>
+        <Route exact path='/singleroom/:slug'>
           <SingleRoom />
         </Route>
         <Route exact path='*'>
