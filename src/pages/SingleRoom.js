@@ -1,5 +1,5 @@
 import React from 'react'
-import Hero from '../components/Hero'
+
 import Banner from '../components/Banner'
 import { Link, useParams } from 'react-router-dom'
 import { useGlobalContext } from '../context'
@@ -12,20 +12,10 @@ function SingleRoom() {
   let room = rooms.filter((room) => room.infos.slug === slug)
   let singleRoom = room[0]
   //   console.log(room[0])
-  const {
-    name,
-    price,
-    type,
-    size,
-    capacity,
-    pets,
-    breakfast,
-    extras,
-    description,
-  } = singleRoom.infos
+  const { name, price, size, capacity, pets, breakfast, extras, description } =
+    singleRoom.infos
   const { images } = singleRoom
 
-  console.log(description)
   return (
     <>
       <div className='roomsHero'>
