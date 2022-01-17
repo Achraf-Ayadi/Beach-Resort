@@ -2,8 +2,8 @@ import React from 'react'
 import { useGlobalContext } from '../context'
 import Room from './Room'
 
-function RoomList() {
-  const { rooms } = useGlobalContext()
+function RoomList({ rooms }) {
+  // const { rooms } = useGlobalContext()
 
   if (rooms.length === 0) {
     return (

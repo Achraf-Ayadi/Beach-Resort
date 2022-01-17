@@ -1,14 +1,16 @@
 import React from 'react'
 import { useGlobalContext } from '../context'
 import Title from '../components/Title'
-function RoomFilter() {
-  const { rooms, searchFilter, handleChange } = useGlobalContext()
+function RoomFilter({rooms}) {
+  const { searchFilter, handleChange } = useGlobalContext()
   const getUnique = (items, value) => {
     return [...new Set(items.map((item) => item.infos[value]))]
   }
 
   const type = getUnique(rooms, 'type')
-  const Types = ['All', ...type]
+  const types = ['All', ...type]
+
+  const people = getUnique(rooms, 'capacity')
 
   return (
     <section className='filter-container'>
@@ -24,8 +26,31 @@ function RoomFilter() {
             className='form-control'
             onChange={handleChange}
           >
-            {Types.map((type, index) => {
-              return <option value={type} key={index}>{type}</option>
+            {types.map((type, index) => {
+              return (
+                <option value={type} key={index}>
+                  {type}
+                </option>
+              )
+            })}
+          </select>
+        </div>
+        {/* select guests */}
+        <div className='form-group'>
+          <label htmlFor='capacity'>guests</label>
+          <select
+            name='capacity'
+            id='capacity'
+            value={searchFilter.capacity}
+            className='form-control'
+            onChange={handleChange}
+          >
+            {people.map((item, index) => {
+              return (
+                <option value={item} key={index}>
+                  {item}
+                </option>
+              )
             })}
           </select>
         </div>

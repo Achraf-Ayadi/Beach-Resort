@@ -8,7 +8,7 @@ const AppProvider = ({ children }) => {
   const [rooms, setRooms] = useState([])
   const [loading, setLoading] = useState(true)
 
-  const [sortedRoom, setSortedRoom] = useState([])
+  const [sortedRooms, setSortedRooms] = useState(rooms)
   //   const [featuredRooms, setFeaturedRooms] = useState()
 
   const [searchFilter, setSearchFilter] = useState({
@@ -21,17 +21,7 @@ const AppProvider = ({ children }) => {
     breackfast: false,
     pets: false,
   })
-  const handleChange = (e) => {
-    const name = e.target.name
-    const type = e.target.type
-    const value = e.target.value
-    console.log(name, type, value)
-  }
-  const maxPrice = Math.max(...rooms.map((item) => item.infos.price))
-  const maxSize = Math.max(...rooms.map((item) => item.infos.size))
 
-  console.log(rooms)
-  console.log(maxSize)
   const fetchRooms = (items) => {
     let tempItems = items.map((item) => {
       const id = item.sys.id
@@ -45,16 +35,63 @@ const AppProvider = ({ children }) => {
 
     return tempItems
   }
-
-  const featuredRooms = rooms.filter((room) => room.infos.featured === true)
-  //   console.log(newRooms)
   useEffect(() => {
     fetchRooms(data)
   }, [])
 
+  const featuredRooms = rooms.filter((room) => room.infos.featured === true)
+  //   console.log(newRooms)
+
+  const handleChange = (e) => {
+    const name = e.target.name
+    const value = e.type === 'checkbox' ? e.target.checked : e.target.value
+    setSearchFilter({
+      ...searchFilter,
+      [name]: value,
+    })
+  }
+
+  // console.log(searchFilter)
+  const filterRooms = () => {
+    let {
+      type,
+      capacity,
+      minPrice,
+      minSize,
+      maxPrice,
+      maxSize,
+      breackfast,
+      pets,
+    } = searchFilter
+    let tempRooms = [...rooms]
+    if (type !== 'All') {
+      const tempRooms = rooms.filter((item) => item.infos.type === type)
+      // muss noch gemacht werden
+      // setSortedRooms(tempRooms)
+      // console.log(tempRooms)
+    }
+    if (capacity !== 1) {
+      capacity = parseInt(capacity)
+      const tempRooms = rooms.filter((item) => item.infos.capacity >= capacity)
+
+      setSortedRooms(tempRooms)
+      console.log(tempRooms)
+    }
+  }
+  useEffect(() => {
+    filterRooms()
+  }, [searchFilter])
+  // console.log(sortedRooms)
+  const maxPrice = Math.max(...rooms.map((item) => item.infos.price))
+  const maxSize = Math.max(...rooms.map((item) => item.infos.size))
+
+  // console.log(rooms)
+  // console.log(maxSize)
+
   return (
     <AppContext.Provider
       value={{
+        sortedRooms,
         searchFilter,
         handleChange,
         rooms,
