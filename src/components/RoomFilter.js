@@ -1,7 +1,7 @@
 import React from 'react'
 import { useGlobalContext } from '../context'
 import Title from '../components/Title'
-function RoomFilter({rooms}) {
+function RoomFilter({ rooms }) {
   const { searchFilter, handleChange } = useGlobalContext()
   const getUnique = (items, value) => {
     return [...new Set(items.map((item) => item.infos[value]))]
@@ -54,6 +54,65 @@ function RoomFilter({rooms}) {
             })}
           </select>
         </div>
+        {/* room price */}
+        <div className='form-group'>
+          <label htmlFor='price'>room price ${searchFilter.price}</label>
+          <input
+            type='range'
+            name='price'
+            min={searchFilter.minPrice}
+            max={searchFilter.maxPrice}
+            id='price'
+            value={searchFilter.price}
+            onChange={handleChange}
+            className='form-control'
+          />
+        </div>
+        {/* end of room price*/}
+        {/* size */}
+        <div className='form-group'>
+          <label htmlFor='price'>room size </label>
+          <div className='size-inputs'>
+            <input
+              type='number'
+              name='minSize'
+              value={searchFilter.minSize}
+              onChange={handleChange}
+              className='size-input'
+            />
+            <input
+              type='number'
+              name='maxSize'
+              value={searchFilter.maxSize}
+              onChange={handleChange}
+              className='size-input'
+            />
+          </div>
+        </div>
+        {/* end of select type */}
+        {/* extras */}
+        <div className='form-group'>
+          <div className='single-extra'>
+            <input
+              type='checkbox'
+              name='breakfast'
+              id='breakfast'
+              checked={searchFilter.breakfast}
+              onChange={handleChange}
+            />
+            <label htmlFor='breakfast'>breakfast</label>
+          </div>
+          <div className='single-extra'>
+            <input
+              type='checkbox'
+              name='pets'
+              checked={searchFilter.pets}
+              onChange={handleChange}
+            />
+            <label htmlFor='pets'>pets</label>
+          </div>
+        </div>
+        {/* end of extras type */}
       </form>
     </section>
   )

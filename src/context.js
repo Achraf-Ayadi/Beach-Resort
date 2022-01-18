@@ -6,23 +6,22 @@ const AppContext = React.createContext()
 
 const AppProvider = ({ children }) => {
   const [rooms, setRooms] = useState([])
-  const [loading, setLoading] = useState(true)
-
-  const [sortedRooms, setSortedRooms] = useState(rooms)
-  //   const [featuredRooms, setFeaturedRooms] = useState()
-
+  const [loading, setLoading] = useState(false)
+  const [sortedRooms, setSortedRooms] = useState([])
   const [searchFilter, setSearchFilter] = useState({
     type: 'all',
     capacity: 1,
+    price: 0,
     minPrice: 0,
     maxPrice: 0,
     minSize: 0,
     maxSize: 0,
-    breackfast: false,
+    breakfast: false,
     pets: false,
   })
 
   const fetchRooms = (items) => {
+    setLoading(true)
     let tempItems = items.map((item) => {
       const id = item.sys.id
       const infos = item.fields
@@ -30,17 +29,14 @@ const AppProvider = ({ children }) => {
       const room = { id, infos, images }
       return room
     })
-
+    setLoading(false)
     setRooms(tempItems)
-
-    return tempItems
+    setSortedRooms(tempItems)
   }
+  console.log(rooms)
   useEffect(() => {
     fetchRooms(data)
   }, [])
-
-  const featuredRooms = rooms.filter((room) => room.infos.featured === true)
-  //   console.log(newRooms)
 
   const handleChange = (e) => {
     const name = e.target.name
@@ -51,42 +47,51 @@ const AppProvider = ({ children }) => {
     })
   }
 
-  // console.log(searchFilter)
+  const featuredRooms = rooms.filter((room) => room.infos.featured === true)
+
   const filterRooms = () => {
     let {
       type,
       capacity,
-      minPrice,
       minSize,
-      maxPrice,
-      maxSize,
-      breackfast,
+      maxPrice = Math.max(...rooms.map((item) => item.infos.price)),
+      price = maxPrice,
+      maxSize = Math.max(...rooms.map((item) => item.infos.size)),
+      breakfast,
       pets,
     } = searchFilter
-    let tempRooms = [...rooms]
-    if (type !== 'All') {
-      const tempRooms = rooms.filter((item) => item.infos.type === type)
-      // muss noch gemacht werden
-      // setSortedRooms(tempRooms)
-      // console.log(tempRooms)
-    }
-    if (capacity !== 1) {
-      capacity = parseInt(capacity)
-      const tempRooms = rooms.filter((item) => item.infos.capacity >= capacity)
 
-      setSortedRooms(tempRooms)
-      console.log(tempRooms)
+    let tempRooms = []
+
+    
+    // filter by type
+    if (type !== 'all') {
+      tempRooms = rooms.filter((room) => room.infos.type === type)
     }
+    // filter by capacity
+    if (capacity !== 1) {
+      tempRooms = rooms.filter((room) => room.infos.capacity >= capacity)
+    }
+    // filter by price
+    tempRooms = rooms.filter((room) => room.infos.price <= price)
+    //filter by size
+    tempRooms = rooms.filter(
+      (room) => room.infos.size >= minSize && room.infos.size <= maxSize
+    )
+    //filter by breakfast
+    if (breakfast) {
+      tempRooms = rooms.filter((room) => room.infos.breakfast === true)
+    }
+    //filter by pets
+    if (pets) {
+      tempRooms = rooms.filter((room) => room.infos.pets === true)
+    }
+    setSortedRooms(tempRooms)
   }
+
   useEffect(() => {
     filterRooms()
   }, [searchFilter])
-  // console.log(sortedRooms)
-  const maxPrice = Math.max(...rooms.map((item) => item.infos.price))
-  const maxSize = Math.max(...rooms.map((item) => item.infos.size))
-
-  // console.log(rooms)
-  // console.log(maxSize)
 
   return (
     <AppContext.Provider
