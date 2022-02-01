@@ -1,16 +1,10 @@
 import React from 'react'
-import { useState } from 'react'
+import { useRoomsContext } from '../context/roomsContext'
 import logo from '../images/logo.svg'
 import { Link } from 'react-router-dom'
 import { BiAlignRight } from 'react-icons/bi'
 function Navbar() {
-  const [isOpen, setIsOpen] = useState(false)
-
-  const toggleNavbar = () => {
-    setIsOpen(!isOpen)
-  }
- 
-
+  const { isSidebarOpen, toggleSidebar } = useRoomsContext()
   return (
     <nav className='navbar'>
       <div className='nav-center'>
@@ -18,11 +12,11 @@ function Navbar() {
           <Link to='/'>
             <img src={logo} alt='sitelogo' />
           </Link>
-          <button className='nav-btn' type='btn' onClick={toggleNavbar}>
+          <button className='nav-btn' type='btn' onClick={toggleSidebar}>
             <BiAlignRight className='nav-icon' />
           </button>
         </div>
-        <ul className={isOpen ? 'nav-links show-nav' : 'nav-links'}>
+        <ul className={isSidebarOpen ? 'nav-links show-nav' : 'nav-links'}>
           <li>
             <Link to='/'>home</Link>
           </li>

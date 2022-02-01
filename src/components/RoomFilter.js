@@ -1,14 +1,30 @@
 import React from 'react'
-import { useGlobalContext } from '../context'
+import { useFilterContext } from '../context/filterContext'
 import Title from '../components/Title'
-function RoomFilter({ rooms }) {
-  const { searchFilter, handleChange } = useGlobalContext()
+function RoomFilter() {
   const getUnique = (items, value) => {
-    return [...new Set(items.map((item) => item.infos[value]))]
+    return [...new Set(items.map((item) => item[value]))]
   }
 
-  const type = getUnique(rooms, 'type')
-  const types = ['All', ...type]
+  const {
+    rooms,
+
+    filters: {
+      type,
+      capacity,
+      size,
+      maxSize,
+      minSize,
+      price,
+      maxPrice,
+      minPrice,
+      breakfest,
+      pets,
+    },
+    updateFilter,
+  } = useFilterContext()
+
+  const types = ['All', getUnique(rooms, 'type')]
 
   const people = getUnique(rooms, 'capacity')
 
@@ -22,9 +38,9 @@ function RoomFilter({ rooms }) {
           <select
             name='type'
             id='type'
-            value={searchFilter.type}
+            value={type}
             className='form-control'
-            onChange={handleChange}
+            onChange={updateFilter}
           >
             {types.map((type, index) => {
               return (
@@ -41,9 +57,9 @@ function RoomFilter({ rooms }) {
           <select
             name='capacity'
             id='capacity'
-            value={searchFilter.capacity}
+            value={capacity}
             className='form-control'
-            onChange={handleChange}
+            onChange={updateFilter}
           >
             {people.map((item, index) => {
               return (
@@ -56,35 +72,35 @@ function RoomFilter({ rooms }) {
         </div>
         {/* room price */}
         <div className='form-group'>
-          <label htmlFor='price'>room price ${searchFilter.price}</label>
+          <label htmlFor='price'>room price ${price}</label>
           <input
             type='range'
             name='price'
-            min={searchFilter.minPrice}
-            max={searchFilter.maxPrice}
+            min={minPrice}
+            max={maxPrice}
             id='price'
-            value={searchFilter.price}
-            onChange={handleChange}
+            value={price}
+            onChange={updateFilter}
             className='form-control'
           />
         </div>
         {/* end of room price*/}
         {/* size */}
         <div className='form-group'>
-          <label htmlFor='price'>room size </label>
+          <label htmlFor='size'>room size </label>
           <div className='size-inputs'>
             <input
               type='number'
               name='minSize'
-              value={searchFilter.minSize}
-              onChange={handleChange}
+              value={minSize}
+              onChange={updateFilter}
               className='size-input'
             />
             <input
               type='number'
               name='maxSize'
-              value={searchFilter.maxSize}
-              onChange={handleChange}
+              value={maxSize}
+              onChange={updateFilter}
               className='size-input'
             />
           </div>
@@ -97,8 +113,8 @@ function RoomFilter({ rooms }) {
               type='checkbox'
               name='breakfast'
               id='breakfast'
-              checked={searchFilter.breakfast}
-              onChange={handleChange}
+              checked={breakfest}
+              onChange={updateFilter}
             />
             <label htmlFor='breakfast'>breakfast</label>
           </div>
@@ -106,8 +122,8 @@ function RoomFilter({ rooms }) {
             <input
               type='checkbox'
               name='pets'
-              checked={searchFilter.pets}
-              onChange={handleChange}
+              checked={pets}
+              onChange={updateFilter}
             />
             <label htmlFor='pets'>pets</label>
           </div>

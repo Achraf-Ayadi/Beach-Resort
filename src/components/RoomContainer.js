@@ -1,15 +1,12 @@
 import React from 'react'
-import { useGlobalContext } from '../context'
+import { useRoomsContext } from '../context/roomsContext'
 import RoomFilter from './RoomFilter'
 import RoomList from './RoomList'
-import Loading from './Loading'
+// import Loading from './Loading'
 
 function RoomContainer() {
-  const { rooms, loading, sortedRooms } = useGlobalContext()
-
-  if (loading) {
-    return <Loading />
-  }
+  const { rooms } = useRoomsContext()
+  const sortedRooms = rooms
   return (
     <>
       <RoomFilter rooms={rooms} />

@@ -1,23 +1,18 @@
-import { useGlobalContext } from '../context'
+import { useRoomsContext } from '../context/roomsContext'
 import Room from './Room'
-import Loading from './Loading'
 import Title from './Title'
 
 import React from 'react'
 
 function FeaturedRooms() {
-  const { featuredRooms, loading } = useGlobalContext()
+  const { featuredRooms } = useRoomsContext()
 
   return (
     <section className='featured-Rooms'>
-      <Title title= "featured room" />
+      <Title title='featured room' />
       <div className='featured-rooms-center'>
         {featuredRooms.map((featuredRoom) => {
-          return loading ? (
-            <Loading />
-          ) : (
-            <Room key={featuredRoom.id} room={featuredRoom} />
-          )
+          return <Room key={featuredRoom.id} room={featuredRoom} />
         })}
       </div>
     </section>

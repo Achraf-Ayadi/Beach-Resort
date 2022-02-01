@@ -2,16 +2,16 @@ import React from 'react'
 import ReactDOM from 'react-dom'
 import './index.css'
 import App from './App'
-import { AppProvider } from './context'
+import { RoomsProvider } from './context/roomsContext'
 import { BrowserRouter as Router } from 'react-router-dom'
 
 ReactDOM.render(
   <React.StrictMode>
-    <AppProvider>
+    <RoomsProvider>
       <Router>
         <App />
       </Router>
-    </AppProvider>
+    </RoomsProvider>
   </React.StrictMode>,
   document.getElementById('root')
 )

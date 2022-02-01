@@ -2,19 +2,26 @@ import React from 'react'
 
 import Banner from '../components/Banner'
 import { Link, useParams } from 'react-router-dom'
-import { useGlobalContext } from '../context'
+import { useRoomsContext } from '../context/roomsContext'
 
 function SingleRoom() {
-  const { rooms } = useGlobalContext()
-
+  const { rooms } = useRoomsContext()
   const { slug } = useParams()
 
-  let room = rooms.filter((room) => room.infos.slug === slug)
-  let singleRoom = room[0]
-  //   console.log(room[0])
-  const { name, price, size, capacity, pets, breakfast, extras, description } =
-    singleRoom.infos
-  const { images } = singleRoom
+  const singleRoom = rooms.filter((room) => room.slug === slug)[0]
+  console.log(singleRoom)
+
+  const {
+    images,
+    name,
+    price,
+    size,
+    capacity,
+    pets,
+    breakfast,
+    extras,
+    description,
+  } = singleRoom
 
   return (
     <>

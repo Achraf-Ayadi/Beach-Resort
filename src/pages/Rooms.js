@@ -8,7 +8,7 @@ function Rooms() {
     <>
       <div className='roomsHero'>
         <Banner title='our rooms'>
-          <Link to='/rooms' className='btn-primary'>
+          <Link to='/' className='btn-primary'>
             Back to home
           </Link>
         </Banner>

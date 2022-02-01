@@ -3,9 +3,8 @@ import { Link } from 'react-router-dom'
 import DefaultImage from '../images/defaultBcg.jpeg'
 
 function Room({ room }) {
-  const { name, slug, price } = room.infos
+  const { name, slug, price } = room
   const { images } = room
-//   console.log(slug)
 
   return (
     <article className='room'>
