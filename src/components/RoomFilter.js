@@ -2,17 +2,13 @@ import React from 'react'
 import { useFilterContext } from '../context/filterContext'
 import Title from '../components/Title'
 function RoomFilter() {
-  const getUnique = (items, value) => {
-    return [...new Set(items.map((item) => item[value]))]
-  }
-
   const {
     rooms,
 
     filters: {
       type,
       capacity,
-      size,
+      // size,
       maxSize,
       minSize,
       price,
@@ -24,14 +20,18 @@ function RoomFilter() {
     updateFilter,
   } = useFilterContext()
 
-  const types = ['All', getUnique(rooms, 'type')]
+  const getUnique = (items, value) => {
+    return [...new Set(items.map((item) => item[value]))]
+  }
+  const types = ['All', ...getUnique(rooms, 'type')]
+  // console.log(getUnique(rooms, 'type'))
 
-  const people = getUnique(rooms, 'capacity')
+  const capacities = ['All', ...getUnique(rooms, 'capacity')]
 
   return (
     <section className='filter-container'>
       <Title title='search rooms' />
-      <form className='filter-form'>
+      <form className='filter-form' onSubmit={(e) => e.preventDefault}>
         {/* select type */}
         <div className='form-group'>
           <label htmlFor='type'>room type</label>
@@ -61,10 +61,10 @@ function RoomFilter() {
             className='form-control'
             onChange={updateFilter}
           >
-            {people.map((item, index) => {
+            {capacities.map((capacity, index) => {
               return (
-                <option value={item} key={index}>
-                  {item}
+                <option value={capacity} key={index}>
+                  {capacity}
                 </option>
               )
             })}
@@ -111,12 +111,12 @@ function RoomFilter() {
           <div className='single-extra'>
             <input
               type='checkbox'
-              name='breakfast'
-              id='breakfast'
+              name='breakfest'
+              id='breakfest'
               checked={breakfest}
               onChange={updateFilter}
             />
-            <label htmlFor='breakfast'>breakfast</label>
+            <label htmlFor='breakfest'>breakfest</label>
           </div>
           <div className='single-extra'>
             <input

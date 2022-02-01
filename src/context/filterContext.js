@@ -34,10 +34,9 @@ export const FilterProvider = ({ children }) => {
   useEffect(() => {
     dispatch({ type: LOAD_ROOMS, payload: rooms })
   }, [rooms])
-
   useEffect(() => {
     dispatch({ type: FILTER_ROOMS })
-  }, [rooms, state.filters])
+  }, [state.filters])
 
   const updateFilter = (e) => {
     // updateFilter ACTION
@@ -45,11 +44,11 @@ export const FilterProvider = ({ children }) => {
     let name = e.target.name
 
     if (name === 'type') {
-      value = e.target.textContent
+      value = e.target.value
     }
     if (name === 'capacity') {
-      value = e.target.dataset.color
-      // console.log(value)
+      value = e.target.value
+      //   console.log(value)
     }
     if (name === 'price') {
       value = Number(value)
@@ -60,7 +59,7 @@ export const FilterProvider = ({ children }) => {
     if (name === 'maxSize') {
       value = Number(value)
     }
-    if (name === 'breakfast') {
+    if (name === 'breakfest') {
       value = e.target.checked
     }
     if (name === 'pets') {
@@ -71,6 +70,8 @@ export const FilterProvider = ({ children }) => {
     // console.log(name, value)
   }
 
+  console.log(state)
+
   //   const clearFilter = () => {
   //     dispatch({ type: CLEAR_FILTERS })
   //   }
@@ -80,7 +81,6 @@ export const FilterProvider = ({ children }) => {
     <FilterContext.Provider
       value={{
         ...state,
-
         updateFilter,
         // clearFilter,
       }}

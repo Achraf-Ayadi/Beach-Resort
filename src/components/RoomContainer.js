@@ -1,16 +1,16 @@
 import React from 'react'
-import { useRoomsContext } from '../context/roomsContext'
+import { useFilterContext } from '../context/filterContext'
 import RoomFilter from './RoomFilter'
 import RoomList from './RoomList'
 // import Loading from './Loading'
 
 function RoomContainer() {
-  const { rooms } = useRoomsContext()
-  const sortedRooms = rooms
+  const { rooms, filtredRooms } = useFilterContext()
+  // console.log(filtredRooms)
   return (
     <>
       <RoomFilter rooms={rooms} />
-      <RoomList rooms={sortedRooms} />
+      {/* <RoomList rooms={filtredRooms} /> */}
     </>
   )
 }
