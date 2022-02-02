@@ -14,19 +14,20 @@ function RoomFilter() {
       price,
       maxPrice,
       minPrice,
-      breakfest,
+      breakfast,
       pets,
     },
     updateFilter,
+    clearFilter,
   } = useFilterContext()
 
   const getUnique = (items, value) => {
     return [...new Set(items.map((item) => item[value]))]
   }
-  const types = ['All', ...getUnique(rooms, 'type')]
-  // console.log(getUnique(rooms, 'type'))
+  const types = ['all', ...getUnique(rooms, 'type')]
+  // console.log(types)
 
-  const capacities = ['All', ...getUnique(rooms, 'capacity')]
+  const capacities = [...getUnique(rooms, 'capacity')]
 
   return (
     <section className='filter-container'>
@@ -111,12 +112,12 @@ function RoomFilter() {
           <div className='single-extra'>
             <input
               type='checkbox'
-              name='breakfest'
-              id='breakfest'
-              checked={breakfest}
+              name='breakfast'
+              id='breakfast'
+              checked={breakfast}
               onChange={updateFilter}
             />
-            <label htmlFor='breakfest'>breakfest</label>
+            <label htmlFor='breakfast'>breakfast</label>
           </div>
           <div className='single-extra'>
             <input
@@ -129,6 +130,9 @@ function RoomFilter() {
           </div>
         </div>
         {/* end of extras type */}
+        <button className='btn-primary' onClick={clearFilter}>
+          clear Filter
+        </button>
       </form>
     </section>
   )

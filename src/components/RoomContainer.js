@@ -6,11 +6,11 @@ import RoomList from './RoomList'
 
 function RoomContainer() {
   const { rooms, filtredRooms } = useFilterContext()
-  // console.log(filtredRooms)
+  
   return (
     <>
       <RoomFilter rooms={rooms} />
-      {/* <RoomList rooms={filtredRooms} /> */}
+      <RoomList rooms={filtredRooms} />
     </>
   )
 }

@@ -1,9 +1,7 @@
 export const TOGGLE_SIDEBAR = 'TOGGLE_SIDEBAR'
 export const GET_ROOMS = 'GET_ROOMS'
 export const GET_FEATURED = 'GET_FEATURED'
-export const GET_SINGLE_ROOM = 'GET_SINGLE_ROOM'
 export const LOAD_ROOMS = 'LOAD_ROOMS'
-
 export const UPDATE_FILTERS = 'UPDATE_FILTERS'
 export const FILTER_ROOMS = 'FILTER_ROOMS'
 export const CLEAR_FILTERS = 'CLEAR_FILTERS'

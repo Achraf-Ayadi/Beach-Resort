@@ -4,7 +4,7 @@ import {
   LOAD_ROOMS,
   UPDATE_FILTERS,
   FILTER_ROOMS,
-  //   CLEAR_FILTERS,
+  CLEAR_FILTERS,
 } from '../actions'
 import { useRoomsContext } from './roomsContext'
 
@@ -12,15 +12,15 @@ const initialState = {
   rooms: [],
   filtredRooms: [],
   filters: {
-    type: '',
-    capacity: 0,
+    type: 'all',
+    capacity: 1,
     size: 0,
     maxSize: 0,
     minSize: 0,
     price: 0,
     maxPrice: 0,
     minPrice: 0,
-    breakfest: false,
+    breakfast: false,
     pets: false,
   },
 }
@@ -34,9 +34,10 @@ export const FilterProvider = ({ children }) => {
   useEffect(() => {
     dispatch({ type: LOAD_ROOMS, payload: rooms })
   }, [rooms])
+
   useEffect(() => {
     dispatch({ type: FILTER_ROOMS })
-  }, [state.filters])
+  }, [rooms, state.filters])
 
   const updateFilter = (e) => {
     // updateFilter ACTION
@@ -59,7 +60,7 @@ export const FilterProvider = ({ children }) => {
     if (name === 'maxSize') {
       value = Number(value)
     }
-    if (name === 'breakfest') {
+    if (name === 'breakfast') {
       value = e.target.checked
     }
     if (name === 'pets') {
@@ -72,9 +73,9 @@ export const FilterProvider = ({ children }) => {
 
   console.log(state)
 
-  //   const clearFilter = () => {
-  //     dispatch({ type: CLEAR_FILTERS })
-  //   }
+  const clearFilter = () => {
+    dispatch({ type: CLEAR_FILTERS })
+  }
 
   // console.log(state.allProducts)
   return (
@@ -82,7 +83,7 @@ export const FilterProvider = ({ children }) => {
       value={{
         ...state,
         updateFilter,
-        // clearFilter,
+        clearFilter,
       }}
     >
       {children}

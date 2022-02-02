@@ -2,9 +2,8 @@ import {
   LOAD_ROOMS,
   UPDATE_FILTERS,
   FILTER_ROOMS,
-  //   CLEAR_FILTERS,
+  CLEAR_FILTERS,
 } from '../actions'
-// import roomsReducer from './roomsReducer'
 
 const filterReducer = (state, action) => {
   if (action.type === LOAD_ROOMS) {
@@ -32,64 +31,56 @@ const filterReducer = (state, action) => {
 
   if (action.type === FILTER_ROOMS) {
     const { rooms } = state
-    const { type, capacity, maxSize, minSize, price, breakfest, pets } =
+    let { type, capacity, maxSize, minSize, price, breakfast, pets } =
       state.filters
     let tempRooms = [...rooms]
 
     // type
-    if (type !== 'All') {
-      tempRooms = tempRooms.filter((room) => {
-        return room.type === type
-      })
+    if (type !== 'all') {
+      tempRooms = tempRooms.filter((room) => room.type === type)
     }
     // capacity
-    // if (capacity !== 'All') {
-    //   tempRooms = tempRooms.filter((room) => {
-    //     return room.capacity === capacity
-    //   })
-    // }
-    // // minSize
+    capacity = parseInt(capacity)
+    if (capacity !== 1) {
+      tempRooms = tempRooms.filter((room) => room.capacity === capacity)
+    }
+    // Size
 
-    // tempRooms = tempRooms.filter((room) => {
-    //   return room.size >= minSize
-    // })
-    // // maxSize
-
-    // tempRooms = tempRooms.filter((room) => {
-    //   return room.size <= maxSize
-    // })
-
-    
+    tempRooms = tempRooms.filter(
+      (room) => room.size >= minSize && room.size <= maxSize
+    )
     // Price
 
     tempRooms = tempRooms.filter((room) => {
       return room.price <= price
     })
-    // // breakfest
-    if (breakfest) {
-      tempRooms = tempRooms.filter((room) => room.breakfest === true)
+    // breakfast
+    if (breakfast) {
+      tempRooms = tempRooms.filter((room) => room.breakfast === true)
     }
-    // // pets
+    // pets
     if (pets) {
       tempRooms = tempRooms.filter((room) => room.pets === true)
     }
 
     return { ...state, filtredRooms: tempRooms }
   }
-  //   if (action.type === CLEAR_FILTERS) {
-  //     return {
-  //       ...state,
-  //       ...state.filters,
-  //       filters: {
-  //         text: ' ',
-  //         capacity: 'all',
-  //         company: 'all',
-  //         color: 'all',
-  //         price: state.filters.maxPrice,
-  //         shipping: false,
-  //       },
-  //     }
-  //   }
+  if (action.type === CLEAR_FILTERS) {
+    return {
+      ...state,
+      ...state.filters,
+      filters: {
+        type: 'all',
+        capacity: 1,
+        maxSize: state.filters.maxSize,
+        minSize: state.filters.minSize,
+        maxPrice: state.filters.maxSize,
+        minPrice: state.filters.minSize,
+        breakfast: false,
+        pets: false,
+      },
+    }
+  }
 
   throw new Error(`No Matching "${action.type}" - action type`)
 }

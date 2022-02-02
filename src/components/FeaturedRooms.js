@@ -8,7 +8,7 @@ function FeaturedRooms() {
   const { featuredRooms } = useRoomsContext()
 
   return (
-    <section className='featured-Rooms'>
+    <section className='featured-rooms'>
       <Title title='featured room' />
       <div className='featured-rooms-center'>
         {featuredRooms.map((featuredRoom) => {
