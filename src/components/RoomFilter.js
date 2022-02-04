@@ -130,10 +130,12 @@ function RoomFilter() {
           </div>
         </div>
         {/* end of extras type */}
+      </form>
+      <div style={{ textAlign: 'center', marginTop: '5rem' }}>
         <button className='btn-primary' onClick={clearFilter}>
           clear Filter
         </button>
-      </form>
+      </div>
     </section>
   )
 }
