@@ -34,7 +34,7 @@ export const RoomsProvider = ({ children }) => {
     fetchRooms(data)
   }, [])
 
-  console.log(state)
+  // console.log(state)
 
   return (
     <RoomsContext.Provider

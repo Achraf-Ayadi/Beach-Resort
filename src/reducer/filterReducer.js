@@ -68,14 +68,13 @@ const filterReducer = (state, action) => {
   if (action.type === CLEAR_FILTERS) {
     return {
       ...state,
-      ...state.filters,
       filters: {
+        ...state.filters,
         type: 'all',
         capacity: 1,
         maxSize: state.filters.maxSize,
         minSize: state.filters.minSize,
-        maxPrice: state.filters.maxSize,
-        minPrice: state.filters.minSize,
+        price: state.filters.maxPrice,
         breakfast: false,
         pets: false,
       },

@@ -71,7 +71,7 @@ export const FilterProvider = ({ children }) => {
     // console.log(name, value)
   }
 
-  console.log(state)
+  // console.log(state)
 
   const clearFilter = () => {
     dispatch({ type: CLEAR_FILTERS })
